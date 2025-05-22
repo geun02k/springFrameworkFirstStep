@@ -25,3 +25,20 @@
        (스프링 프레임워크는 실행 시 component scan을 통해 대상 프로젝트의 모든 패키지를 스캔해 인스턴스 생성.)
    > - 인스턴스를 사용하고 싶은 필드에 @Autowired 어노테이션 부여    
        (스프링 프레임워크에 의해 생성된 인스턴스를 이용하는 클래스에 참조를 받는 필드를 선언하고 필드에 @Autowired 어노테이션 부여.)
+
+---
+
+### < AOP : Aspect Oriented Programming 관점 지향 프로그래밍 >
+공통처리 등 횡단적 관심사(품질, 유지보수 관점 반드시 필요한 기능)를 추출해 프로그램의 여러 곳에서 호출할 수 있게 설정하는 구조.   
+- Aspect : Advice 작성 클래스   
+- Advice : 횡단적 관심사 메서드   
+- JoinPoint : Advice를 중심적 관심사에 적용하는 타이밍   
+- PointCut : Advice 삽입 위치
+
+1. Before Advice : 메서드(중앙적 관심사) 실행 전 호출됨.
+2. After Advice : 메서드 실행 후 호출됨.
+3. Around Advice : 메서드 전후로 호출됨.    
+                   (중앙적 관심사 실행 전에 수행되어야 할 횡단적 관심사 수행 후 중앙적 관심사로 돌아가기위해(호출하기위해) ProceedingJoinPoint.proceed() 실행 필요.)
+4. After Returning Advice : 메서드 정상 종료 후 호출됨. 
+5. After Throwing Advice : 메서드 예외 발생 후 호출됨.
+
