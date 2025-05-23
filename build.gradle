@@ -31,6 +31,9 @@ dependencies {
     // mysql 사용을 위한 의존성 추가
     implementation 'com.mysql:mysql-connector-j'
 
+    // 타임리프(템플릿엔진) 사용을 위한 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
     // lombok 사용을 위한 의존성 추가
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
