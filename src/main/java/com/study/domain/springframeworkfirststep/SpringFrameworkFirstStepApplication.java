@@ -13,8 +13,8 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 public class SpringFrameworkFirstStepApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args)
-                .getBean(SpringFrameworkFirstStepApplication.class).execute();
+        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args);
+//                .getBean(SpringFrameworkFirstStepApplication.class).execute();
     }
 
 //    /**
@@ -32,29 +32,29 @@ public class SpringFrameworkFirstStepApplication {
 //        greet.greeting();
 //    }
 
-    @Autowired
-    MemberCrudRepository repository;
-
-    /**
-     * DB에 데이터 등록과 전체조회
-     */
-    private void execute() {
-        // 등록
-        executeInsert();
-        // 전체조회
-        executeSelect();
-    }
-
-    public void executeInsert() {
-        Member member = new Member(null, "김하늘");
-        member = repository.save(member);
-        System.out.println("등록데이터 : " + member);
-    }
-
-    public void executeSelect() {
-        Iterable<Member> members = repository.findAll();
-        for(Member member : members) {
-            System.out.println(member);
-        }
-    }
+//    @Autowired
+//    MemberCrudRepository repository;
+//
+//    /**
+//     * DB에 데이터 등록과 전체조회
+//     */
+//    private void execute() {
+//        // 등록
+//        executeInsert();
+//        // 전체조회
+//        executeSelect();
+//    }
+//
+//    public void executeInsert() {
+//        Member member = new Member(null, "김하늘");
+//        member = repository.save(member);
+//        System.out.println("등록데이터 : " + member);
+//    }
+//
+//    public void executeSelect() {
+//        Iterable<Member> members = repository.findAll();
+//        for(Member member : members) {
+//            System.out.println(member);
+//        }
+//    }
 }

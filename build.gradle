@@ -19,6 +19,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
     // AOP 사용을 위한 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
