@@ -17,7 +17,7 @@ public class HelloModelController {
         // Model에 데이터 저장
         model.addAttribute("msg", "타임리프!!");
         // View 이름 반환
-        return "helloThymeleaf";
+        return "chapter06/helloThymeleaf";
     }
 
     @GetMapping("thymeleaf")
@@ -40,6 +40,6 @@ public class HelloModelController {
         model.addAttribute("members", members);
 
         // View 이름 반환
-        return "thymeleafSample";
+        return "chapter06/thymeleafSample";
     }
 }
