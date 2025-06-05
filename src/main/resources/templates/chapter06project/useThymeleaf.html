@@ -42,5 +42,34 @@
     <div th:unless="${name} == '김영희'">
         <p>김영희씨가 아닙니다.</p>
     </div>
+
+    <!-- switch -->
+    <div th:switch="${name}">
+        <p th:case="이순신" th:text="|${name}입니다!|"></p>
+        <p th:case="영희" th:text="|${name}입니다~|"></p>
+        <p th:case="철수" th:text="|${name}입니다.|"></p>
+        <p th:case="*">명부에 없습니다.</p>
+    </div>
+    <!-- 참조(entity 객체 데이터 출력) -->
+    <div>
+        <p>1. .으로 접근 ->
+            <span th:text="${member.id}">ID</span> - <span th:text="${member.name}">이름</span>
+        </p>
+        <p>2. []로 접근 ->
+            <span th:text="${member['id']}">ID</span> - <span th:text="${member['name']}">이름</span>
+        </p>
+    </div>
+    <div>
+        <p>3. th:object 태그로 접근 ->
+            <th:block th:object="${member}">
+                <span>1. .으로 접근 ->
+                    <span th:text="*{id}">ID</span> - <span th:text="*{name}">이름</span>
+                </span> /
+                <span>2. []로 접근 ->
+                    <span th:text="*{['id']}">ID</span> - <span th:text="*{['name']}">이름</span>
+                </span>
+            </th:block>
+        </p>
+    </div>
 </body>
 </html>
