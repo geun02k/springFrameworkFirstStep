@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>fragment</title>
+</head>
+<body>
+    <div>
+        <p>fragment(프래그먼트)</p><br>
+        <p>여러 템플릿에서 같은 내용이 사용되는 경우 공통 내용을 별개의 파일로 만들고 필요한 부분에 추가하는 것</p><br>
+        <p>th:insert와 th:replace는 th:fragment 조각을 main.html에 import하는 역할.</p>
+        <p>- th:fragment 속성: 프래그먼트 이용 시 사용.</p><br>
+        <p>- th:insert 속성: 프래그먼트 삽입 시 사용.(::왼쪽에 프래그먼트 파일명, 오른쪽에 th:fragment 속성 앞에 정의한 프래그먼트 이름 지정)</p><br>
+        <p>- th:replace 속성: 전체 내용을 프래그먼트로 완전히 변경 시 사용.</p><br><br>
+        <p>fragment.html : 공통내용 작성</p><br>
+        <p>useThymeleaf.html : 공통내용 가져와 출력</p><br>
+    </div>
+
+    프래그먼트 정의<br>
+    <span th:fragment="one">하나</span><br>
+    <span th:fragment="two">둘</span><br>
+    <span th:fragment="three">셋</span><br>
+
+</body>
+</html>
