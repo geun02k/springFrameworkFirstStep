@@ -88,5 +88,28 @@
         <span th:text="${memberMap['hong']['name']}">이름1</span> - <span th:text="${memberMap['lee']['name']}">이름2</span><br>
     </div>
 
+    <hr>
+    <!-- 반복문 -->
+    <div>
+        <h3>반복문을 통한 리스트 출력</h3>
+        <div th:each="member:${members}">
+            <p>[[${member.id}]] : [[${member.name}]]</p>
+        </div>
+    </div>
+    <!-- 반복 상태 -->
+    <h3>반복 상태 출력</h3>
+    <div th:each="member, s : ${members}" th:object="${member}">
+        <p>index   -> [[${s.index}]]</p>
+        <p>count   -> [[${s.count}]]</p>
+        <p>size    -> [[${s.size}]]</p>
+        <p>current -> [[${s.current}]]</p>
+        <p>even    -> [[${s.even}]]</p>
+        <p>odd     -> [[${s.odd}]]</p>
+        <p>first   -> [[${s.first}]]</p>
+        <p>last    -> [[${s.last}]]</p>
+        <p>[[*{id}]] : [[*{name}]]</p>
+        <p>----------------------------------</p>
+    </div>
+
 </body>
 </html>
