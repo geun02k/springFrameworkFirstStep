@@ -42,7 +42,6 @@
     <div th:unless="${name} == '김영희'">
         <p>김영희씨가 아닙니다.</p>
     </div>
-
     <!-- switch -->
     <div th:switch="${name}">
         <p th:case="이순신" th:text="|${name}입니다!|"></p>
@@ -50,6 +49,8 @@
         <p th:case="철수" th:text="|${name}입니다.|"></p>
         <p th:case="*">명부에 없습니다.</p>
     </div>
+
+    <hr>
     <!-- 참조(entity 객체 데이터 출력) -->
     <div>
         <p>1. .으로 접근 ->
@@ -71,5 +72,21 @@
             </th:block>
         </p>
     </div>
+
+    <!-- 참조(List) -->
+    <div>
+        <span th:text="${directions[0]}">방위</span>
+        <span th:text="${directions[1]}">방위</span>
+        <span th:text="${directions[2]}">방위</span>
+        <span th:text="${directions[3]}">방위</span>
+        <br>
+    </div>
+    <!-- 참조(Map) -->
+    <div>
+        <span> .과 [] 두 가지 방식을 이용한 객체 접근</span>
+        <span th:text="${memberMap.hong.name}">이름1</span> - <span th:text="${memberMap.lee.name}">이름2</span><br>
+        <span th:text="${memberMap['hong']['name']}">이름1</span> - <span th:text="${memberMap['lee']['name']}">이름2</span><br>
+    </div>
+
 </body>
 </html>
