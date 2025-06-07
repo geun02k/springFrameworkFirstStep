@@ -111,5 +111,28 @@
         <p>----------------------------------</p>
     </div>
 
+    <hr>
+    <!-- 유틸리티 객체 (숫자) -->
+    <div th:with="x=1000000, y=123456.789">
+        <p>정수형식 : <span th:text="${#numbers.formatInteger(x,3, 'COMMA')}"></span></p>
+        <p>부동소수점형식 : <span th:text="${#numbers.formatDecimal(y, 3, 'COMMA', 2, 'POINT')}"></span></p>
+    </div>
+    <br>
+    <!-- 유틸리티 객체 (날짜 및 시간) -->
+    <div th:with="today=${#dates.createNow()}">
+        - yyyy/MM/dd 형식 : <span th:text="${#dates.format(today, 'yyyy/MM/dd')}"></span><br>
+        - yyyy년 MM월 dd일 형식 : <span th:text="${#dates.format(today, 'yyyy년 MM월 dd일')}"></span><br>
+        - yyyy년 : <span th:text="${#dates.year(today)}"></span><br>
+        - MM월 : <span th:text="${#dates.month(today)}"></span><br>
+        - dd일 : <span th:text="${#dates.day(today)}"></span><br>
+        - 요일 : <span th:text="${#dates.dayOfWeek(today)}"></span><br>
+    </div>
+    <br>
+    <!-- 유틸리티 객체 (문자열) -->
+    <div th:with="str1='abcdef'">
+        - 대문자 변환 : <span th:text="${#strings.toUpperCase(str1)}"></span><br>
+        - 빈 문자열 판정 : <span th:text="${#strings.isEmpty(str1)}"></span><br>
+        - 길이 : <span th:text="${#strings.length(str1)}"></span><br>
+    </div>
 </body>
 </html>
