@@ -48,4 +48,9 @@ public class ThymeleafController {
     public String showFragment() {
         return "chapter06project/useFragment";
     }
+
+    @GetMapping("a")
+    public String showA() {
+        return "chapter06project/pageA";
+    }
 }

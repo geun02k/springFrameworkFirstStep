@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<!-- resources/templates 하위 chapter06project/commons/layout 폴더 아래의 html파일을 decorator로 사용함을 선언 -->
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{chapter06project/commons/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>공통 레이아웃 사용하는 페이지 (페이지A)</title>
+</head>
+<body>
+    <!-- layout.html에서 decorator로 기술하고 있는 layout:fragment="content" 부분을 대체 -->
+    <div layout:fragment="content">
+        <h1>PageA</h1>
+    </div>
+</body>
+</html>
