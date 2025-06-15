@@ -43,4 +43,9 @@ public class ThymeleafController {
         // view 이름 반환
         return "chapter06project/useThymeleaf";
     }
+
+    @GetMapping("showFragment")
+    public String showFragment() {
+        return "chapter06project/useFragment";
+    }
 }
