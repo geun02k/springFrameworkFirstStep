@@ -12,12 +12,25 @@
             <h3>URL에 입력할 값</h3>
             <div>
                 <span>th:href="@{/function/1}" -> /function/1 링크생성.</span><br>
-                <span>- @{} -> @를 {} 앞에 붙이면 컨텍스트 경로(URL의 상대적 경로)를 의식하지 않아도 됨.</span><br>
-                <span>- URL 제일끝의 숫자 -> @를 {} 앞에 붙이면 컨텍스트 경로(URL의 상대적 경로)를 의식하지 않아도 됨.</span><br>
+                <span>- @{} -> 타임리프 경로생성 전용 문법.</span><br>
+                <span>- URL 제일끝의 숫자 -> 요청 핸들러 메서드에서 변수로 받을 값</span><br>
             </div>
             <h5><a th:href="@{/pathVariable/function/1}">기능1</a></h5>
             <h5><a th:href="@{/pathVariable/function/2}">기능2</a></h5>
             <h5><a th:href="@{/pathVariable/function/3}">기능3</a></h5>
+        </div>
+
+        <div>
+            <h3>동일 Form 태그 안에 포함된 여러 개의 버튼</h3>
+            <div>
+                <span>동일한 Form에 모든 버튼이 존재하므로 어떤 버튼을 클릭하더라도 동일 URL로 요청이 송신된다.</span><br>
+                <span>어떤 버튼을 클릭했는지는 버튼의 name 속성으로 판별 가능하다.</span><br>
+            </div>
+            <form th:action="@{/pathVariable/send}" method="post">
+                <input type="submit" value="버튼A" name="a">
+                <input type="submit" value="버튼B" name="b">
+                <input type="submit" value="버튼C" name="c">
+            </form>
         </div>
     </div>
 
