@@ -33,6 +33,8 @@ dependencies {
 
     // 타임리프(템플릿엔진) 사용을 위한 의존성 추가
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    // 타임리프 레이아웃 사용을 위한 의존성 추가
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
     // lombok 사용을 위한 의존성 추가
     compileOnly 'org.projectlombok:lombok'
