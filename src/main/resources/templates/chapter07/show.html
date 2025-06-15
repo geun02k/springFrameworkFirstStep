@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL 경로에 포함된 값과 클릭된 버튼 식별</title>
+</head>
+<body>
+    <h1>URL 경로에 포함된 값, 클릭된 버튼 식별하기</h1>
+    <br>
+    <div>
+        <div>
+            <h3>URL에 입력할 값</h3>
+            <div>
+                <span>th:href="@{/function/1}" -> /function/1 링크생성.</span><br>
+                <span>- @{} -> @를 {} 앞에 붙이면 컨텍스트 경로(URL의 상대적 경로)를 의식하지 않아도 됨.</span><br>
+                <span>- URL 제일끝의 숫자 -> @를 {} 앞에 붙이면 컨텍스트 경로(URL의 상대적 경로)를 의식하지 않아도 됨.</span><br>
+            </div>
+            <h5><a th:href="@{/pathVariable/function/1}">기능1</a></h5>
+            <h5><a th:href="@{/pathVariable/function/2}">기능2</a></h5>
+            <h5><a th:href="@{/pathVariable/function/3}">기능3</a></h5>
+        </div>
+    </div>
+
+    </form>
+</body>
+</html>
