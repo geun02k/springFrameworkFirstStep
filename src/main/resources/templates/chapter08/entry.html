@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>입력화면</title>
+    <title th:text="#{title.entry}">제목</title>
 </head>
 <body>
     <div>
@@ -19,9 +19,8 @@
         <br><hr><br>
     </div>
     <form th:action="@{/validation/calc}" method="post" th:object="${calcForm}">
-        <br><hr><br>
         <div>
-            <p>에러 여부 출력</p>
+            <p>에러 출력</p>
             <ui th:if="${#fields.hasErrors('*')}">
                 <li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
             </ui>
@@ -33,7 +32,7 @@
             +
             <input type="text" th:field="*{rightNum}">
         </div>
-        <input type="submit" value="계산">
+        <button type="submit" th:text="#{button.send}"></button>
     </form>
 </body>
 </html>
