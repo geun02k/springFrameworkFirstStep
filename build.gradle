@@ -36,6 +36,11 @@ dependencies {
     // 타임리프 레이아웃 사용을 위한 의존성 추가
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+    // Jakarta EE제공 Validation 검증을 위한 의존성 추가 (표준)
+    implementation 'jakarta.validation:jakarta.validation-api'
+    // 하이버네이트 프레임워크 제공 Validation 검증을 위한 의존성 추가 (확장)
+    implementation 'org.hibernate.validator:hibernate-validator'
+
     // lombok 사용을 위한 의존성 추가
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

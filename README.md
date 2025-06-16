@@ -45,6 +45,25 @@
 5. After Throwing Advice : 메서드 예외 발생 후 호출됨.
 
 
+### < javax 라이브러리 vs jakarta 라이브러리 >
+> 두 라이브러리 모두 자바 공식 표준 API 라이브러리들이다.
+> Spring, JPA, Servlet, Validation 등 다양한 java 프레임워크에서 핵심 역할을 수행한다.
+> 하지만 스프링부트 버전에 따라 사용가능한 라이브러리 상이하다.
+> 스프링부트 2.x 버전까지는 javax, 스프링부트 3.x 버전부터는 jakarta를 사용해야한다.
+
+1. javax
+    - Oracle의 Java EE(Enterprise Edition)
+    - Java EE 8 이하에서 사용
+    - Spring Boot 2.x 버전까지 주로 사용
+    - javax.servlet, javax.persistence, javax.validation, javax.annotation 등...
+
+2. jakarta
+    - Eclipse 재단의 Java EE
+    - Jakarta EE 9 이상에서 사용
+    - 추후 Oracle이 Java EE를 Eclipse 재단에 기증하면서 Oracle과 Eclipse 간 상표권 문제 발생. 따라서 강제로 javax에서 jakarta로 라이브러리를 변경.
+    - **Spring Boot 3.x 부터 jakarta로 전환되어 사용**
+    - ex) javax.servlet.http.HttpServletRequest -> jakarta.servlet.http.HttpServletRequest
+
 ---
 ## < 타임리프 >
 
