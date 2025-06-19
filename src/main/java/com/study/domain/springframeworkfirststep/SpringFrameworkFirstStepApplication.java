@@ -1,7 +1,6 @@
 package com.study.domain.springframeworkfirststep;
 
-import com.study.domain.springframeworkfirststep.chapter04.entity.Member;
-import com.study.domain.springframeworkfirststep.chapter04.repository.MemberCrudRepository;
+import com.study.domain.springframeworkfirststep.chapter09.quiz.FunctionTestSample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +12,9 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 public class SpringFrameworkFirstStepApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args);
+        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args)
 //                .getBean(SpringFrameworkFirstStepApplication.class).execute();
+                .getBean(FunctionTestSample.class).executeQuiz();
     }
 
 //    /**
