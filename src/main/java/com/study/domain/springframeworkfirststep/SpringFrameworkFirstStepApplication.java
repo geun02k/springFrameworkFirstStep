@@ -1,6 +1,7 @@
 package com.study.domain.springframeworkfirststep;
 
 import com.study.domain.springframeworkfirststep.chapter09.quiz.FunctionTestSample;
+import com.study.domain.springframeworkfirststep.chapter09.quiz.ServiceTestSample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,8 @@ public class SpringFrameworkFirstStepApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringFrameworkFirstStepApplication.class, args)
 //                .getBean(SpringFrameworkFirstStepApplication.class).execute();
-                .getBean(FunctionTestSample.class).executeQuiz();
+//                .getBean(FunctionTestSample.class).executeQuiz();
+                .getBean(ServiceTestSample.class).executeQuiz();
     }
 
 //    /**
