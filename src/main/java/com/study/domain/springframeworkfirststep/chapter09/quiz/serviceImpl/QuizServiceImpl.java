@@ -5,10 +5,15 @@ import com.study.domain.springframeworkfirststep.chapter09.quiz.repository.QuizR
 import com.study.domain.springframeworkfirststep.chapter09.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+// @Transactional
+// 트랜잭션의 경계(시작되고 끝나는 범위)를 설정해 메서드 성공 시 commit, 실패 시 rollback
+// 클래스에 부여하는 경우 변경처리를 포함한 서비스 처리 뿐 아니라 실수 등으로 인한 버그 등을 방지하는 목적으로 함
 @Service
+@Transactional
 public class QuizServiceImpl implements QuizService {
 
     @Autowired
