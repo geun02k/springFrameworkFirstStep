@@ -6,7 +6,6 @@ import com.study.domain.springframeworkfirststep.chapter09.quiz.service.QuizServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -130,6 +129,40 @@ public class QuizController {
         return "redirect:/quiz";
     }
 
+    /** 랜덤퀴즈조회 */
+    @GetMapping("play")
+    public String showRandomQuiz(QuizForm quizForm,
+                                 Model model) {
+        // 랜덤퀴즈조회
+        Optional<Quiz> quizOpt = quizService.selectOneRandomQuiz();
+
+        // model에 데이터 저장
+        if (quizOpt.isPresent()) {
+            Optional<QuizForm> quizFormQpt = quizOpt.map(quiz -> makeQuizForm(quiz));
+            quizForm = quizFormQpt.get();
+            model.addAttribute("quizForm", quizForm);
+
+        } else {
+            model.addAttribute("msg", "등록된 문제가 없습니다.");
+        }
+
+        return "chapter09quiz/play";
+    }
+
+    @PostMapping("check")
+    public String checkQuiz(QuizForm quizForm,
+                            @RequestParam Boolean answer,
+                            Model model) {
+        String msg = "오답입니다.";
+        // 정답여부체크
+        if (quizService.checkQuiz(quizForm.getId(), answer)) {
+            msg = "정답입니다.";
+        }
+        model.addAttribute("msg", msg);
+        return "chapter09quiz/answer";
+    }
+
+    // quiz Form -> quiz Entity
     private Quiz makeQuiz(QuizForm quizForm) {
         Quiz quiz = new Quiz();
         quiz.setId(quizForm.getId());
@@ -138,7 +171,6 @@ public class QuizController {
         quiz.setAuthor(quizForm.getAuthor());
         return quiz;
     }
-
 
     // quiz Entity -> quiz Form
     private QuizForm makeQuizForm(Quiz quiz) {
@@ -150,8 +182,6 @@ public class QuizController {
         form.setNewQuiz(false);
         return form;
     }
-
-    // quiz Form -> quiz Entity
 
     // update용 모델 생성
     private void makeUpdateModel(QuizForm quizForm, Model model) {
