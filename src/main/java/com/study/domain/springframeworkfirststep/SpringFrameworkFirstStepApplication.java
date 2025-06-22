@@ -13,10 +13,10 @@ import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 public class SpringFrameworkFirstStepApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args)
+        SpringApplication.run(SpringFrameworkFirstStepApplication.class, args);
 //                .getBean(SpringFrameworkFirstStepApplication.class).execute();
 //                .getBean(FunctionTestSample.class).executeQuiz();
-                .getBean(ServiceTestSample.class).executeQuiz();
+//                .getBean(ServiceTestSample.class).executeQuiz();
     }
 
 //    /**
