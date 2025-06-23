@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf</title>
+</head>
+<body>
+    <h1>Thymeleaf 사용법</h1>
+    <br>
+
+    <h3>직접 문자 삽입</h3>
+    <h5 th:text="'hello world'">표시하는 부분</h5>
+    <h5>th:text="''" -> 문자열 출력 가능.</h5>
+    <h5>큰 따옴표는 속성값 설정에 사용</h5>
+    <h5>작은 따옴표는 문자입력 시 감싸는 용도로 사용</h5>
+    <br>
+
+    <h3>인라인 처리</h3>
+    <h5>안녕하세요! [[${name}]]씨</h5>
+    <h5>[ [ $ { } ] ] 태그 -> 서버에서 view에 model로 전달받은 값 사용 가능.</h5>
+    <h5>                  -> 고정값과 변수를 조합하고 싶은 경우 사용.</h5>
+    <h5>                  -> 태그의 속성에 추가하는 것이 아니라 본체에 변수로 삽입.</h5>
+    <br>
+
+    <h3>값 결합</h3>
+    <h5 th:text="'오늘의 날씨는 ' + '맑음' + '입니다, ' + ${name} + '씨'">표시하는 부분</h5>
+    <h5>th:text 속성 -> + 문자를 통해 문자열 결합 가능.</h5>
+    <br>
+
+    <h3>값 결합(리터럴 치환)</h3>
+    <h5 th:text="|안녕하세요 ${name}씨|">표시하는 부분</h5>
+    <h5>리터럴 : 변수나 상수에 직접 할당되는 고정 값 (변하지 않는 값)</h5>
+    <h5>th:text 속성 -> | 와 | 문자 사이에 있는 문자열 및 타임리프 독자 문법 ${}으로 출력할 수 있는 model 데이터를 한번에 결합가능.</h5>
+    <br>
+
+    <h3>지역변수</h3>
+    <div th:with="a=1, b=2">
+        <div th:text="|${a} + ${b} = ${a+b}|"></div>
+        <div>th:text="변수이름=값" -> 지역변수를 생성해 값 할당</div>
+        <div>                    -> 지역변수 범위 : 태그 내부에서만 사용가능.</div>
+        <div>                    -> ${} 내 지역변수에 대해 산술연산자 사용가능.</div>
+    </div>
+    <br>
+
+    <h3>비교 등가</h3>
+    <div>비교, 동등 연산자 이용해 숫자 및 문자열 비교도 가능</div>
+    <span th:text="1 > 10"></span>
+    <span th:text="1 <= 10"></span>
+    <span th:text="1 == 10"></span>
+    <span th:text="1 != 10"></span>
+    <span th:text="길동 != 길동"></span>
+    <span th:text="길동 == 길동"></span>
+    <br>
+
+    <h3>조건 연산자</h3>
+    <p>삼항연산자 사용가능.</p>
+    <p th:text="${name} == '길동' ? '길동입니다.' : '길동이가 아닙니다.'"></p>
+
+    <h3>조건 분기처리</h3>
+    <h5>th:if="조건"</h5>
+    <p>th:if="조건" -> 조건 결과가 참일 경우, 조건절 태그 내 자식요소 출력</p>
+    <div th:if="${name}=='김하늘'">
+        <p>김하늘씨 입니다.</p>
+    </div>
+    <h5>th:unless="조건"</h5>
+    <p>th:unless="조건" -> 조건 결과가 거짓일 경우, 조건절 태그 내 자식요소 출력</p>
+    <div th:unless="${name}=='영희'">
+        <p>영희씨가 아닙니다.</p>
+    </div>
+    <h5>th:block</h5>
+    <div>
+        <p>th:if, th:unless 처리를 위해 div 태그를 늘리고 싶지 않다면 th:block 태그 속성에 th:if, th:unless 추가가능.</p>
+        <p>th:block 태그는 렌더링 후 지워져 HTML 소스에 남지 않음.</p>
+        <th:block th:if="${name} == '김하늘'">
+            <p>김하늘입니다!</p>
+        </th:block>
+    </div>
+    <h3>switch</h3>
+    <div>부모 요소의 값과 자식 요소에 작성하는 값이 동일한 경우, HTML 출력 </div>
+    <div>th:case -> 조건에 일치하는 경우 th:text 출력 </div>
+    <div>th:case="*" -> else문 작성 </div>
+    <div th:switch="${name}">
+        <p th:case="홍길동" th:text="|${name}입니다.|"></p>
+        <p th:case="김영희" th:text="|홍길동이 아닌 ${name}입니다.|"></p>
+        <p th:case="김하늘" th:text="|김영희가 아닌 ${name}입니다.|"></p>
+        <p th:case="*">명부에 없습니다.</p>
+    </div>
+    <br>
+
+    <h3>객체 데이터 참조1 (객체명.필드 형식으로 참조)</h3>
+    <p>서버에서 저장한 캡슐화된 필드를 참조하는 경우, public 접근제한자의 get 메서드를 작성해 객체명.필드 or 객체명[필드] 형식으로 값 참조가능.</p>
+    <span th:text="${user.id}">ID</span>
+    <span th:text="${user.name}">이름</span>
+    <br>
+    <span th:text="${user['id']}">ID</span>
+    <span th:text="${user['name']}">이름</span>
+    <br>
+    <h3>객체 데이터 참조2 (객체 object로 따로 설정 후 필드 참조)</h3>
+    <p>서버에서 데이터를 저장한 객체를 th:object에 설정.</p>
+    <p>th:object에 설정한 자식 요소에서 *{필드명} 형식으로 값 참조가능.</p>
+    <div th:object="${user}">
+        <span th:text="*{id}">ID</span>
+        <span th:text="*{name}">이름</span>
+        <br>
+        <span th:text="*{['id']}">ID</span>
+        <span th:text="*{['name']}">이름</span>
+    </div>
+    <br>
+
+    <h3>List 참조</h3>
+    <p>리스트 배열의 요소 참조 시 인덱스 번호를 통해 참조</p>
+    <div>
+        <span th:text="${sampleList[0]}">방위</span>
+        <span th:text="${sampleList[1]}">방위</span>
+        <span th:text="${sampleList[2]}">방위</span>
+        <span th:text="${sampleList[3]}">방위</span>
+    </div>
+    <br>
+
+    <h3>Map 참조</h3>
+    <div>
+        <p>Map 요소 참조 시 key를 이용해 값 참조.</p>
+        <p>map.key 형식으로 참조가능</p>
+        <p>map['key'] 형식으로 참조가능</p>
+    </div>
+    <div>
+        <span th:text="${sampleMap.kim}">이름1</span>
+        <span th:text="${sampleMap.lee}">이름2</span>
+    </div>
+    <div>
+        <p th:text="${sampleMap['kim']}">이름1</p>
+        <p th:text="${sampleMap['lee']}">이름2</p>
+    </div>
+    <br>
+
+    <h3>반복</h3>
+    <div>
+        <p>th:each="요소저장용 변수 : ${서버에서 저장한 반복처리객체} 형식으로 반복처리 가능.</p>
+        <p>요소저장용변수는 반복처리중에만 유효.</p>
+        <p>Iterable 인터페이스를 구현한 클래스라면 th:each로 반복 처리 가능.</p>
+    </div>
+    <div>아이디 : 이름</div>
+    <div th:each="member : ${members}">
+        <p>[[${member.id}]] : [[${member.name}]]</p>
+    </div>
+    <h3>반복 상태</h3>
+    <div>
+        <p>th:each="요소저장용 변수, 상태변수, 서버에서 저장한 반복처리객체" 형식으로 반복 대상의 상태값 출력 가능.</p>
+        <p>상태변수를 선언해 반복상태를 유지한 상태변수 사용가능.</p>
+        <div>
+            <p>반복 상태 변수 목록</p>
+            <p>index : 현재의 인덱스 표시(0부터 시작)</p>
+            <p>count : 반복횟수표시(1부터 시작)</p>
+            <p>size : 반복 처리하는 객체의 사이즈 표시</p>
+            <p>current : 현재 반복 요소의 객체 표시</p>
+            <p>even : 현재 요소가 짝수 번째인지 여부 출력</p>
+            <p>odd : 현재 요소가 홀수 번째인지 여부 출력</p>
+            <p>first : 현재 요소가 첫번째 요소인지 여부 출력</p>
+            <p>last : 현재 요소가 마지막 요소인지 여부 출력</p>
+        </div>
+    </div>
+    <div th:each="member, s: ${members}" th:object="${member}">
+        <p>
+            index -> [[${s.index}]],
+            count -> [[${s.count}]],
+            size -> [[${s.size}]],
+            current -> [[${s.current}]],
+            even -> [[${s.even}]],
+            odd -> [[${s.odd}]],
+            first -> [[${s.first}]],
+            last -> [[${s.last}]],
+            [[*{id}]] : [[*{name}]]
+        </p>
+    </div>
+    <br>
+
+    <h3>유틸리티 객체</h3>
+    <div>
+        <p>타임리프에서는 자주 사용되는 클래스를 '#유틸리티객체' 상수로 정의.</p>
+        <div>
+            <p>#strings : 문자 관련 편의 기능</p>
+            <p>- 문자열의 길이와 대소문자 변환같은 String클래스와 유사한 메서드 제공</p>
+        </div>
+        <div>
+            <p>#numbers : 숫자 서식 지원</p>
+            <p>- 정수값 형식 변환 : #numbers.formatInteger</p>
+            <p>- 부동소수점 형식 변환 : #numbers.formatDecimal (쉼표 COMMA, 소수점 POINT 사용)</p>
+        </div>
+        <p>#bools : boolean 관련 기능</p>
+        <div>
+            <p>#dates : java.util.Date 서식 지원</p>
+            <p>- 날짜의 포맷 변환을 위해 현재 날짜 취득 or 연,월,일,요일 취득 메서드 제공</p>
+            <p>- format() : 날짜가 담긴 변수와 포맷 변환 문자열 지정</p>
+            <p>- year(),month(),day() : 날짜가 담긴 변수를 인수로 전달해 연,월,일 취득</p>
+            <p>- dayOfWeek() : 요일 나타내는 정수 취득</p>
+        </div>
+        <p>#objects : 객체 관련 기능</p>
+        <p>#arrays : 배열 관련 기능</p>
+        <p>#lists : List 관련 기능</p>
+        <p>#sets : Set 관련 기능</p>
+        <p>#maps : Map 관련 기능</p>
+    </div>
+    <div th:with="x=1000000, y=123456.789">
+        <#numbers><br>
+        정수 형식: <span th:text="${#numbers.formatInteger(x,3,'COMMA')}"></span><br>
+        부동소수점 형식: <span th:text="${#numbers.formatDecimal(y,3,'COMMA', 2,'POINT')}"></span>
+    </div>
+    <br>
+
+    <div th:with="today=${#dates.createNow()}">
+        <#dates><br>
+        yyyy/MM/dd 형식: <span th:text="${#dates.format(today, 'yyyy/MM/dd')}"></span><br>
+        yyyy년 mm월 dd일 형식: <span th:text="${#dates.format(today, 'yyyy년 MM월 dd일')}"></span><br>
+        yyyy년: <span th:text="${#dates.year(today)}"></span><br>
+        mm월: <span th:text="${#dates.month(today)}"></span><br>
+        dd일: <span th:text="${#dates.day(today)}"></span><br>
+        요일: <span th:text="${#dates.dayOfWeek(today)}"></span><br>
+    </div>
+    <br>
+
+    <div th:with="str1='abcdef'">
+        <#string><br>
+        대문자 변환: <span th:text="${#strings.toUpperCase(str1)}"></span><br>
+        빈 문자열 변환: <span th:text="${#strings.isEmpty(str1)}"></span><br>
+        길이: <span th:text="${#strings.length(str1)}"></span><br>
+    </div>
+    <br>
+</body>
+</html>

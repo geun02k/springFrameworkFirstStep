@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form class 이용한 확인화면</title>
+</head>
+<body>
+    <h1>Form class를 이용해 데이터 입력받아 출력하기</h1>
+    <h3>고정값과 변수의 조합 -> [[${변수명}]] 이용해 데이터 출력</h3>
+    <h3>Form class 데이터 출력</h3>
+    <h3>-> '객체명.필드명' 형식으로 출력</h3>
+    <h3>-> 단, Form 데이터의 변수명이 아닌, 클래스명의 카멜케이스를 통해 접근해야함!!!</h3>
+    <ul>
+        <li>이름 : [[${userForm.name}]]</li>
+        <li>나이 : [[${userForm.age}]]</li>
+        <li>생년월일 : [[${userForm.birth}]]</li>
+    </ul>
+</body>
+</html>

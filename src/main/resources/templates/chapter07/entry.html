@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>입력화면</title>
+</head>
+<body>
+    <h1>입력값받기</h1>
+    <br>
+    <form th:action="@{/confirm}" method="post">
+        <div>
+            <!-- 문서에서 for 속성 값과 일치하는 id 속성을 가진 첫 번째 요소는 이 레이블 요소에 대한 레이블 제어 -->
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name">
+        </div>
+        <div>
+            <label for="age">나이:</label>
+            <input type="number" id="age" name="age" min="1" max="100">
+        </div>
+        <div>
+            <!-- type="date" -> yyyy-MM-dd 형식 -->
+            <label for="birth">생년월일:</label>
+            <input type="date" id="birth" name="birth">
+        </div>
+        <input type="submit" value="전송">
+    </form>
+</body>
+</html>

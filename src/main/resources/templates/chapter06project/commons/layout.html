@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    타임리프 레이아웃 Dialect 사용하기 위해 선언
+ -->
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>베이스: 레이아웃</title>
+</head>
+<body>
+    <header>
+        <div align="center">
+            <h1>공통 머리글</h1>
+        </div>
+    </header>
+    <hr>
+
+    <!-- 프래그먼트로 대체 -> layout:fragment="프래그먼트 이름" -->
+    <div layout:fragment="content" align="center">
+        대체 위치
+    </div>
+
+    <footer>
+        <hr>
+        <div align="center">
+            <h1>공통 바닥글</h1>
+        </div>
+    </footer>
+</body>
+</html>

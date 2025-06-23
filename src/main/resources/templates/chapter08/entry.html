@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.entry}">제목</title>
+</head>
+<body>
+    <div>
+        <h3>객체데이터 참조 방법</h3>
+        <p>th:field="*{leftNum}"</p>
+        <p>th:field 속성 -> HTML로 표시되었을 때, id,name,value 속성 생성</p>
+        <p>*{ } -> 서버에서 데이터를 저장한 객체를 th:object에 설정 후 object 설정한 자식 요소에서 *{필드명} 형식으로 값 참조가능</p>
+        <br><hr><br>
+        <h3>에러표시</h3>
+        <p>#fields.hasErrors() </p>
+        <p>- 에러 발생여부 판단</p>
+        <p>- 모든 필드의 에러를 받아 출력하므로 인수로 '*' 전달 (특정 필드 에러 받고 싶으면 인수로 필드명 전달)</p>
+        <p>- 에러 메시지를 배열로 반환하므로 th:each 속성을 이용해 표시.</p>
+        <br><hr><br>
+    </div>
+    <form th:action="@{/validation/calc}" method="post" th:object="${calcForm}">
+        <div>
+            <p>에러 출력</p>
+            <ui th:if="${#fields.hasErrors('*')}">
+                <li th:each="err:${#fields.errors('*')}" th:text="${err}"></li>
+            </ui>
+        </div>
+        <br><hr><br>
+        <div>
+            <p>계산</p>
+            <input type="text" th:field="*{leftNum}">
+            +
+            <input type="text" th:field="*{rightNum}">
+        </div>
+        <button type="submit" th:text="#{button.send}"></button>
+    </form>
+</body>
+</html>

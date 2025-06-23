@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>프래그먼트 사용하기</title>
+</head>
+<body>
+    <h1>Fragment를 아래에 삽입</h1>
+    <div id="one" th:insert="chapter06project/fragment :: one"></div>
+    <div id="three" th:replace="chapter06project/fragment :: three"></div>
+</body>
+</html>
