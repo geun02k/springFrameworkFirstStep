@@ -64,6 +64,54 @@
     - **Spring Boot 3.x 부터 jakarta로 전환되어 사용**
     - ex) javax.servlet.http.HttpServletRequest -> jakarta.servlet.http.HttpServletRequest
 
+
+### < Lombok의 @Data 어노테이션 사용 시 getAnswer() 메서드가 자동생성되지 않는 이유 >
+Quiz 클래스를 생성해 @Data 어노테이션을 부여했을 때 getAnswer() 메서드가 생성되지 않아 호출이 불가 문제
+> JavaBean 규약에 따라 boolean 타입은 get 메서드 대신 is 메서드를 생성하는 것이 일반적이다.
+> 그리고 Lombokeh JavaBean 규약을 따른다.
+> 따라서 네이밍 규칙에 의해 getAnswer()가 아닌 isAnswer() 메서드를 생성한다.
+> 단, 객체 타입인 Boolean 타입의 경우에는 get 메서드를 생성한다.
+자바에서 boolean 타입 필드만 특별히 isXxx() 형태의 getter 메서드를 갖는 이유는 JavaBean 명세 때문이다. 
+
+
+### < MethodArgumentNotValidException 에러해결 >
+1. 발생에러
+    ~~~
+    org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public java.lang.String com.study.domain.springframeworkfirststep.chapter09.quiz.controller.QuizController.showQuiz(com.study.domain.springframeworkfirststep.chapter09.quiz.form.QuizForm,java.lang.Integer,org.springframework.ui.Model): [Field error in object 'quizForm' on field 'id': rejected value [paly]; codes [typeMismatch.quizForm.id,typeMismatch.id,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [quizForm.id,id]; arguments []; default message [id]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.lang.Integer' for property 'id'; For input string: "paly"]] 
+    ~~~
+   
+2. 발생원인
+    해당 에러는 Spring MVC에서 컨트롤러로 전달된 요청 파라미터가 Java 객체의 필드 타입과 일치하지 않아 변환에 실패했을 때 발생하는 MethodArgumentNotValidException이다.
+    컨트롤러의 메서드에서 QuizForm 안의 id 필드는 Integer 타입인데 사용자가 전송한 값은 "paly"라는 문자열이다.
+    이 문자열은 Integer로 변환할 수 없기 때문에 타입 변환 예외가 발생했다.
+    ~~~
+    @GetMapping("/quiz/{id}")
+    public String showQuiz(QuizForm quizForm, @PathVariable Integer id, Model model) {
+        ...
+    }
+    @GetMapping("/quiz/paly")
+    public String playQuiz(QuizForm quizForm, Model model) {
+        ...
+    }   
+    ~~~
+   @GetMapping("/quiz/play"), @GetMapping("/quiz/{id}") 두개의 매핑 경로가 존재할 때
+   /quiz/play 경로로 요청 시 @GetMapping("/quiz/play")에 매핑되지 않고 @GetMapping("/quiz/{id}")에 매핑되는 문제가 발생했다.
+   해당 문제는 Spring MVC의 URL 패턴 매핑 순서와 경로 변수(PathVariable) 처리 방식과 관련있다.
+   ***Spring은 경로 매핑 시 더 구체적인 패턴을 우선해 처리한다.
+   하지만 {id}는 와일드카드처럼 동작하므로 우선순위가 모호해지는 경우가 발생한다.***
+   즉 {id}는 어떤 문자열도 매칭하므로 /quiz/play는 {id}에 play를 넣으려 시도하지만 play는 Integer 타입이 아니기에 타입변환오류가 발생했다.
+
+3. 해결방법
+    @RequestMapping에서 매핑 순서를 명확히 구분해 경로 충돌을 피해야한다.
+    따라서 와일드카드처럼 동작하는 {id}를 정규식을 이용해 정수 숫자만 허용되도록 지정해야한다.
+    ~~~
+    @GetMapping("/quiz/{id:\\id+}")
+    public String showQuiz(QuizForm quizForm, @PathVariable Integer id, Model model) {
+        ...
+    }
+    ~~~    
+
+
 ---
 ## < 타임리프 >
 
@@ -91,4 +139,62 @@
 ../는 HTML이 아닌 **Thymeleaf 파서가 먼저 해석**합니다.
 이때 **정확한 현재 경로 컨텍스트를 알기 어렵기 때문에 ../는 잘못된 경로로 변환되거나 무시**될 수 있습니다.
 
+
+### < 타임리프 th:field 접근오류해결 >
+1. 발생에러
+    ~~~
+    java.lang.IllegalStateException: Neither BindingResult nor plain target object for bean name 'obj' available as request attribute
+	    at org.springframework.web.servlet.support.BindStatus.<init>(BindStatus.java:153) ~[spring-webmvc-6.2.6.jar:6.2.6]
+	    at org.springframework.web.servlet.support.RequestContext.getBindStatus(RequestContext.java:928) ~[spring-webmvc-6.2.6.jar:6.2.6]
+    ~~~
+2. 발생원인
+    ~~~
+           <!-- 퀴즈 존재 시 출력 -->
+        <table th:unless="${#lists.isEmpty(quizList)}"
+               border="1" style="table-layout: fixed">
+            <tr>
+                <th>ID</th>
+                <th>내용</th>
+                <th>정답</th>
+                <th>작성자</th>
+                <th>변경</th>
+                <th>삭제</th>
+            </tr>
+            <tr th:each="obj:${quizList}" align="center">
+                <td th:text="${obj.id}"></td>
+                <td th:text="${obj.question}" align="left"></td>
+                <td th:text="${obj.answer} == true ? 'O' : 'X'"></td>
+                <td th:text="${obj.author}"></td>
+                <td>
+                    <!-- @{/quiz/{id}(id=${quiz.id})}
+                         : URL 경로 안에 {}로 감싼 변수 끝에 ()를 사용해 값 대입 -->
+                    <form method="GET" th:action="@{/quiz/{id}(id=${obj.id})}">
+                        <input type="submit" value="변경">
+                    </form>
+                </td>
+                <td>
+                    <form method="POST" th:action="@{/quiz/delete}">
+                        <input type="hidden" th:field="${obj.id}">
+                        <input type="submit" value="삭제">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    ~~~
+    해당 오류는 Spring의 Thymleaf 템플릿에서 th:field 사용 시 발생한다.
+    지정된 ***변수가*** 서버에서 전달한 ***모델에 존재하지 않거나 Spring Form 데이터 바인딩 객체가 아닌데 th:field로 접근 시 발생***한다.
+    th:field는 Spring Form 바인딩 기능을 사용하는 특수 속성으로 @ModelAttribute로 바인딩된 객체 또는 th:object로 선언된 객체의 필드를 참조할 떄만 사용해야 한다.
+    위 코드에서 사용한 obj는 단순히 th:each"obj : ${quizList}"에서 반복 변수로 사용된 것이지 Spring Form 모델로 등록된 객체가 아니다.
+
+3. 해결방법
+   obj로 선언한 객체 데이터는 서버에서 model로 전달한 변수도 아니고 Spring Form 데이터 바인딩 객체도 아니므로 th:field로 접근 불가하다.
+   th:field는 name,id,value값을 자동 생성해주므로 해당 코드를 수동 생성해주는 것으로 해결 가능하다.
+    ~~~
+    <td>
+        <form method="POST" th:action="@{/quiz/delete}">
+            <input type="hidden" name="id" th:value="${obj.id}">
+            <input type="submit" value="삭제">
+        </form>
+    </td>
+    ~~~
 
